@@ -498,6 +498,13 @@ var Shinou_code = map[string]string{
 	"979": "南極付近",
 }
 
+func Decoder(from Telegram) Telegram {
+	var to Telegram
+	to.Code_type=Code_type[from.Code_type]
+	to.Section=Section[from.Section]
+	return to
+}
+
 func Reader(str string) Telegram {
 	var msg Telegram
 	for _, line := range strings.Split(string(str), "\n") {
