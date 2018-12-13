@@ -586,14 +586,14 @@ func Reader(str string) Telegram {
 			mag, _ := strconv.ParseFloat(string(vec[19:21]), 64)
 			msg.Magnitude = mag / 10
 			msg.Shindo = string(vec[22:24])
-			msg.Rk1 = string(vec[28:29])
-			msg.Rk2 = string(vec[29:30])
-			msg.Rk3 = string(vec[30:31])
-			msg.Rk4 = string(vec[31:32])
-			msg.Rk5 = string(vec[32:33])
-			msg.Rt1 = string(vec[37:38])
-			msg.Rt2 = string(vec[38:39])
-			msg.Rt3 = string(vec[39:40])
+			msg.Rk1 = string(vec[27:28])
+			msg.Rk2 = string(vec[28:29])
+			msg.Rk3 = string(vec[29:30])
+			msg.Rk4 = string(vec[30:31])
+			msg.Rk5 = string(vec[31:32])
+			msg.Rt1 = string(vec[36:37])
+			msg.Rt2 = string(vec[37:38])
+			msg.Rt3 = string(vec[38:39])
 		} else if length == 63 {
 			// 5 : [EBI 222 S5-04 ////// 11 220 S5-04 ////// 11 211 S5-04 ////// 11](63)
 			offset = 4
