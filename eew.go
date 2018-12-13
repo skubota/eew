@@ -2,7 +2,6 @@ package eew
 
 import (
 	"fmt"
-	"time"
 	"strings"
 	"strconv"
 )
@@ -509,12 +508,9 @@ func Decoder(str string) Telegram {
 	to.Msg_type=Msg_type[from.Msg_type]
 	to.Warn_type=Warn_type[from.Warn_type]
 
-	wt,_ := strconv.ParseInt(from.Warn_time,10,32)
-	to.Warn_time=fmt.Sprintf(time.Unix(wt, 0).Format("2006-01-02 15:04:05"))
+	to.Warn_time="20" + from.Warn_time
 	to.Command_code=from.Command_code
-	et,_ := strconv.ParseInt(from.Eq_time,10,32)
-	to.Eq_time=fmt.Sprintf(time.Unix(et, 0).Format("2006-01-02 15:04:05"))
-	to.Eq_id=from.Eq_id
+	to.Eq_time="20" + from.Eq_time
 	to.Warn_num=from.Warn_num
 	
 	to.Shinou=Shinou_code[from.Shinou]
