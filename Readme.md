@@ -1,7 +1,7 @@
 eew read/decoder
 ===================
 
-=head1 DESCRIPTION
+DESCRIPTION
 
 Earthquake Early Warning(Japan)
 The Earthquake Early Warning (EEW) (緊急地震速報 ,Kinkyu- Jishin Sokuho-) is a warning which is issued just after an earthquake in Japan is detected.
