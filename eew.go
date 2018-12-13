@@ -7,33 +7,33 @@ import (
 )
 
 type Telegram struct {
-	Code_type    string
-	Section      string
-	Msg_type     string
-	Warn_time    string
-	Command_code string
-	Eq_time      string
-	Eq_id        string
-	Warn_type    string
-	Warn_code    string
-	Warn_num     string
-	Shinou       string
-	Shinou_lat   float64
-	Shinou_lng   float64
-	Shinou_dpth  int64
-	Magnitude    float64
-	Shindo       string
-	Rk1          string
-	Rk2          string
-	Rk3          string
-	Rk4          string
-	Rk5          string
-	Rt1          string
-	Rt2          string
-	Rt3          string
-	Rc1          string
-	Rc2          string
-	Ebis         []Ebi
+	CodeType    string
+	Section     string
+	MsgType     string
+	WarnTime    string
+	CommandCode string
+	EqTime      string
+	EqID        string
+	WarnType    string
+	WarnCode    string
+	WarnNum     string
+	Shinou      string
+	ShinouLat   float64
+	ShinouLng   float64
+	ShinouDpth  int64
+	Magnitude   float64
+	Shindo      string
+	Rk1         string
+	Rk2         string
+	Rk3         string
+	Rk4         string
+	Rk5         string
+	Rt1         string
+	Rt2         string
+	Rt3         string
+	Rc1         string
+	Rc2         string
+	Ebis        []Ebi
 }
 
 // EBI
@@ -46,7 +46,7 @@ type Ebi struct {
 }
 
 // 基本コード
-var Code_type = map[string]string{
+var CodeType = map[string]string{
 	"35": "最大予測震度のみ",
 	"36": "Ｍ、最大予測震度及び主要動到達予測時刻",
 	"37": "Ｍ、最大予測度及び主要動到達予測時刻（確度大）",
@@ -66,7 +66,7 @@ var Section = map[string]string{
 }
 
 //訓練等の識別符
-var Msg_type = map[string]string{
+var MsgType = map[string]string{
 	"00": "通常",
 	"01": "訓練",
 	"10": "取り消し",
@@ -163,7 +163,7 @@ var Ebiyy = map[string]string{
 }
 
 //タイプ
-var Warn_type = map[string]string{
+var WarnType = map[string]string{
 	"NCN":  "高度利用者向け",
 	"NPN":  "一般向け",
 	"NCPN": "一般向け",
@@ -178,7 +178,7 @@ var Warn_type = map[string]string{
 }
 
 //発表状況
-var Warn_code = map[string]string{
+var WarnCode = map[string]string{
 	"0": "通常",
 	"6": "訂正",
 	"7": "訂正(キャンセル誤発表)",
@@ -187,7 +187,7 @@ var Warn_code = map[string]string{
 }
 
 //震央コード
-var Shinou_code = map[string]string{
+var ShinouCode = map[string]string{
 	"000": "",
 	"100": "石狩支庁北部",
 	"101": "石狩支庁中部",
@@ -525,35 +525,35 @@ func Decoder(str string) Telegram {
 	var to, from Telegram
 	from = Reader(str)
 
-	to.Code_type = Code_type[from.Code_type]
+	to.CodeType = CodeType[from.CodeType]
 	to.Section = Section[from.Section]
-	to.Msg_type = Msg_type[from.Msg_type]
-	to.Warn_type = Warn_type[from.Warn_type]
-	to.Warn_code = Warn_code[from.Warn_code]
+	to.MsgType = MsgType[from.MsgType]
+	to.WarnType = WarnType[from.WarnType]
+	to.WarnCode = WarnCode[from.WarnCode]
 
-	to.Rk1=Rk1[from.Rk1]
-	to.Rk2=Rk2[from.Rk2]
-	to.Rk3=Rk3[from.Rk3]
-	to.Rt1=Rk1[from.Rt1]
-	to.Rc1=Rc1[from.Rc1]
-	to.Rc2=Rc1[from.Rc2]
+	to.Rk1 = Rk1[from.Rk1]
+	to.Rk2 = Rk2[from.Rk2]
+	to.Rk3 = Rk3[from.Rk3]
+	to.Rt1 = Rk1[from.Rt1]
+	to.Rc1 = Rc1[from.Rc1]
+	to.Rc2 = Rc1[from.Rc2]
 
-	to.Warn_time = "20" + from.Warn_time
-	to.Command_code = from.Command_code
-	to.Eq_time = "20" + from.Eq_time
-	to.Warn_num = from.Warn_num
-	to.Eq_id = from.Eq_id
+	to.WarnTime = "20" + from.WarnTime
+	to.CommandCode = from.CommandCode
+	to.EqTime = "20" + from.EqTime
+	to.WarnNum = from.WarnNum
+	to.EqID = from.EqID
 
-	to.Shinou = Shinou_code[from.Shinou]
+	to.Shinou = ShinouCode[from.Shinou]
 	to.Shindo = Shindo[from.Shindo]
 
-	to.Shinou_lat = from.Shinou_lat
-	to.Shinou_lng = from.Shinou_lng
-	to.Shinou_dpth = from.Shinou_dpth
+	to.ShinouLat = from.ShinouLat
+	to.ShinouLng = from.ShinouLng
+	to.ShinouDpth = from.ShinouDpth
 	to.Magnitude = from.Magnitude
 
 	for e := range from.Ebis {
-		to.Ebis = append(to.Ebis, Ebi{Shinou_code[from.Ebis[e].Shinou], Shindo[from.Ebis[e].Shindo1], Shindo[from.Ebis[e].Shindo2], from.Ebis[e].Time, Ebiyy[from.Ebis[e].Arrive]})
+		to.Ebis = append(to.Ebis, Ebi{ShinouCode[from.Ebis[e].Shinou], Shindo[from.Ebis[e].Shindo1], Shindo[from.Ebis[e].Shindo2], from.Ebis[e].Time, Ebiyy[from.Ebis[e].Arrive]})
 	}
 
 	return to
@@ -569,29 +569,29 @@ func Reader(str string) Telegram {
 			//nope
 		} else if length == 25 {
 			// 1 : [37 03 00 110311144702 C11](25)
-			msg.Code_type = string(vec[0:2])
+			msg.CodeType = string(vec[0:2])
 			msg.Section = string(vec[3:5])
-			msg.Msg_type = string(vec[6:8])
-			msg.Warn_time = string(vec[9:21])
-			msg.Command_code = string(vec[23:25])
+			msg.MsgType = string(vec[6:8])
+			msg.WarnTime = string(vec[9:21])
+			msg.CommandCode = string(vec[23:25])
 		} else if length == 12 {
 			// 2 : [110311144616](12)
-			msg.Eq_time = line
+			msg.EqTime = line
 		} else if length == 46 {
 			// 3 : [ND20110311144640 NCN009 JD////////////// JN///](46)
-			msg.Eq_id = string(vec[2:16])
-			msg.Warn_type = string(vec[17:20])
-			msg.Warn_code = string(vec[20:21])
-			msg.Warn_num = string(vec[21:23])
+			msg.EqID = string(vec[2:16])
+			msg.WarnType = string(vec[17:20])
+			msg.WarnCode = string(vec[20:21])
+			msg.WarnNum = string(vec[21:23])
 		} else if length == 48 {
 			// 4 : [288 N381 E1429 010 76 5- RK66444 RT11/// RC0////](48)
 			msg.Shinou = string(vec[0:3])
 			lat, _ := strconv.ParseFloat(string(vec[5:8]), 64)
-			msg.Shinou_lat = lat / 10
+			msg.ShinouLat = lat / 10
 			lng, _ := strconv.ParseFloat(string(vec[10:14]), 64)
-			msg.Shinou_lng = lng / 10
+			msg.ShinouLng = lng / 10
 			dpth, _ := strconv.ParseInt(string(vec[15:18]), 10, 32)
-			msg.Shinou_dpth = dpth
+			msg.ShinouDpth = dpth
 			mag, _ := strconv.ParseFloat(string(vec[19:21]), 64)
 			msg.Magnitude = mag / 10
 			msg.Shindo = string(vec[22:24])
