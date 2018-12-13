@@ -553,7 +553,7 @@ func Reader(str string) Telegram {
 			msg.Shinou = string(vec[0:3])
 			lat,_ := strconv.ParseFloat(string(vec[5:8]),64)
 			msg.Shinou_lat = fmt.Sprintf("%.1f",lat/10)
-			lng,_ := strconv.ParseFloat(string(vec[10:13]),64)
+			lng,_ := strconv.ParseFloat(string(vec[10:14]),64)
 			msg.Shinou_lng = fmt.Sprintf("%.1f",lng/10)
 			msg.Shinou_dpth = string(vec[14:18])
 			mag,_ := strconv.ParseFloat(string(vec[19:21]),64)
