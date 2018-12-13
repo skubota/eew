@@ -555,7 +555,7 @@ func Reader(str string) Telegram {
 			msg.Shinou_lat = lat/10
 			lng,_ := strconv.ParseFloat(string(vec[10:14]),64)
 			msg.Shinou_lng = lng/10
-			dpth,_ := strconv.ParseInt(string(vec[14:18]),10,32)
+			dpth,_ := strconv.ParseInt(string(vec[15:18]),10,32)
 			msg.Shinou_dpth = dpth
 			mag,_ := strconv.ParseFloat(string(vec[19:21]),64)
 			msg.Magnitude = mag/10
