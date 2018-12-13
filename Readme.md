@@ -15,7 +15,7 @@ usage
 
 godoc
 
-	https://godoc.org/github.com/skubota/eew
+<https://godoc.org/github.com/skubota/eew>
 
 sample
 
