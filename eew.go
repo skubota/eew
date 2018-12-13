@@ -2,8 +2,8 @@ package eew
 
 import (
 	"fmt"
-	"strings"
 	"strconv"
+	"strings"
 )
 
 type Telegram struct {
@@ -500,27 +500,32 @@ var Shinou_code = map[string]string{
 }
 
 func Decoder(str string) Telegram {
-	var to,from Telegram
+	var to, from Telegram
 	from = Reader(str)
 
-	to.Code_type=Code_type[from.Code_type]
-	to.Section=Section[from.Section]
-	to.Msg_type=Msg_type[from.Msg_type]
-	to.Warn_type=Warn_type[from.Warn_type]
+	to.Code_type = Code_type[from.Code_type]
+	to.Section = Section[from.Section]
+	to.Msg_type = Msg_type[from.Msg_type]
+	to.Warn_type = Warn_type[from.Warn_type]
 
-	to.Warn_time="20" + from.Warn_time
-	to.Command_code=from.Command_code
-	to.Eq_time="20" + from.Eq_time
-	to.Warn_num=from.Warn_num
-	
-	to.Shinou=Shinou_code[from.Shinou]
+	to.Warn_time = "20" + from.Warn_time
+	to.Command_code = from.Command_code
+	to.Eq_time = "20" + from.Eq_time
+	to.Warn_num = from.Warn_num
+	to.Eq_id = from.Eq_id
+
+	to.Shinou = Shinou_code[from.Shinou]
 	to.Shindo = Shindo[from.Shindo]
 
-	to.Shinou_lat=from.Shinou_lat
-	to.Shinou_lng=from.Shinou_lng
-	to.Shinou_dpth=from.Shinou_dpth
-	to.Magnitude=from.Magnitude
-	
+	to.Shinou_lat = from.Shinou_lat
+	to.Shinou_lng = from.Shinou_lng
+	to.Shinou_dpth = from.Shinou_dpth
+	to.Magnitude = from.Magnitude
+
+	for e := range from.Ebis {
+		to.Ebis = append(to.Ebis, Ebi{Shinou_code[from.Ebis[e].Shinou], Shindo[from.Ebis[e].Shindo1], Shindo[from.Ebis[e].Shindo2], from.Ebis[e].Time, Ebiyy[from.Ebis[e].Arrive]})
+	}
+
 	return to
 }
 
@@ -550,14 +555,14 @@ func Reader(str string) Telegram {
 		} else if length == 48 {
 			// 4 : [288 N381 E1429 010 76 5- RK66444 RT11/// RC0////](48)
 			msg.Shinou = string(vec[0:3])
-			lat,_ := strconv.ParseFloat(string(vec[5:8]),64)
-			msg.Shinou_lat = lat/10
-			lng,_ := strconv.ParseFloat(string(vec[10:14]),64)
-			msg.Shinou_lng = lng/10
-			dpth,_ := strconv.ParseInt(string(vec[15:18]),10,32)
+			lat, _ := strconv.ParseFloat(string(vec[5:8]), 64)
+			msg.Shinou_lat = lat / 10
+			lng, _ := strconv.ParseFloat(string(vec[10:14]), 64)
+			msg.Shinou_lng = lng / 10
+			dpth, _ := strconv.ParseInt(string(vec[15:18]), 10, 32)
 			msg.Shinou_dpth = dpth
-			mag,_ := strconv.ParseFloat(string(vec[19:21]),64)
-			msg.Magnitude = mag/10
+			mag, _ := strconv.ParseFloat(string(vec[19:21]), 64)
+			msg.Magnitude = mag / 10
 			msg.Shindo = string(vec[22:24])
 		} else if length == 63 {
 			// 5 : [EBI 222 S5-04 ////// 11 220 S5-04 ////// 11 211 S5-04 ////// 11](63)
