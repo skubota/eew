@@ -18,10 +18,10 @@ type Telegram struct {
 	Warn_code    string
 	Warn_num     string
 	Shinou       string
-	Shinou_lat   string
-	Shinou_lng   string
-	Shinou_dpth  string
-	Magnitude    string
+	Shinou_lat   float64
+	Shinou_lng   float64
+	Shinou_dpth  int64
+	Magnitude    float64
 	Shindo       string
 	Ebis         []Ebi
 }
@@ -552,12 +552,13 @@ func Reader(str string) Telegram {
 			// 4 : [288 N381 E1429 010 76 5- RK66444 RT11/// RC0////](48)
 			msg.Shinou = string(vec[0:3])
 			lat,_ := strconv.ParseFloat(string(vec[5:8]),64)
-			msg.Shinou_lat = fmt.Sprintf("%.1f",lat/10)
+			msg.Shinou_lat = lat/10
 			lng,_ := strconv.ParseFloat(string(vec[10:14]),64)
-			msg.Shinou_lng = fmt.Sprintf("%.1f",lng/10)
-			msg.Shinou_dpth = string(vec[14:18])
+			msg.Shinou_lng = lng/10
+			dpth,_ := strconv.ParseInt(string(vec[14:18]),10,32)
+			msg.Shinou_dpth = dpth
 			mag,_ := strconv.ParseFloat(string(vec[19:21]),64)
-			msg.Magnitude = fmt.Sprintf("%.1f",mag/10)
+			msg.Magnitude = mag/10
 			msg.Shindo = string(vec[22:24])
 		} else if length == 63 {
 			// 5 : [EBI 222 S5-04 ////// 11 220 S5-04 ////// 11 211 S5-04 ////// 11](63)
