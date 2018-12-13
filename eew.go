@@ -1,4 +1,4 @@
-// Package eew  id EEW reader/decoder
+// Package eew is EEW reader/decoder
 package eew
 
 import (

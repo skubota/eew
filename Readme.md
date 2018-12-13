@@ -1,4 +1,4 @@
-eew read/decoder
+Package eew is EEW reader/decoder
 ===================
 
 DESCRIPTION
