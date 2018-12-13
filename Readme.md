@@ -6,7 +6,8 @@ usage
 
 sample
 
-`package main
+```go
+package main
 
 import (
 	"fmt"
@@ -34,6 +35,7 @@ EBI 222 S6-5- ////// 11 220 S5+5- ////// 11 211 S5+5- ////// 11
 9999=``
 
 	fmt.Printf("%#v", eew.Decoder(data))
-}`
+}
+```
 
 
