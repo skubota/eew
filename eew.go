@@ -1,3 +1,4 @@
+// Package eew  id EEW reader/decoder
 package eew
 
 import (
@@ -6,6 +7,7 @@ import (
 	"strings"
 )
 
+// Telegram main struct
 type Telegram struct {
 	CodeType    string
 	Section     string
@@ -36,7 +38,7 @@ type Telegram struct {
 	Ebis        []Ebi
 }
 
-// EBI
+// Ebi in Telegram 予想震度と到達時
 type Ebi struct {
 	Shinou  string
 	Shindo1 string
@@ -45,7 +47,7 @@ type Ebi struct {
 	Arrive  string
 }
 
-// 基本コード
+// CodeType 基本コード
 var CodeType = map[string]string{
 	"35": "最大予測震度のみ",
 	"36": "Ｍ、最大予測震度及び主要動到達予測時刻",
@@ -55,7 +57,7 @@ var CodeType = map[string]string{
 	"48": "キャンセル報",
 }
 
-//発信官署
+// Section 発信官署
 var Section = map[string]string{
 	"01": "札幌",
 	"02": "仙台",
@@ -65,7 +67,7 @@ var Section = map[string]string{
 	"06": "沖縄",
 }
 
-//訓練等の識別符
+// MsgType 訓練等の識別符
 var MsgType = map[string]string{
 	"00": "通常",
 	"01": "訓練",
@@ -75,7 +77,7 @@ var MsgType = map[string]string{
 	"30": "コードのみ配信試験",
 }
 
-//震度
+// Shindo 震度
 var Shindo = map[string]string{
 	"01": "震度1",
 	"02": "震度2",
@@ -89,7 +91,7 @@ var Shindo = map[string]string{
 	"//": "不明",
 }
 
-//データの確からしさ
+// Rk1 データの確からしさ
 var Rk1 = map[string]string{
 	"1": "P 波／S 波レベル越え、またはテリトリー法（１点）",
 	"2": "テリトリー法（2 点）",
@@ -103,7 +105,7 @@ var Rk1 = map[string]string{
 	"/": "不明、未設定時、キャンセル時",
 }
 
-//震源の深さの確からしさ
+// Rk2 震源の深さの確からしさ
 var Rk2 = map[string]string{
 	"1":  "P 波／S 波レベル越え、またはテリトリー法（1 点）",
 	"2":  "テリトリー法（2 点）",
@@ -117,7 +119,7 @@ var Rk2 = map[string]string{
 	"/ ": "不明、未設定時、キャンセル時",
 }
 
-//マグニチュードの確からしさ
+// Rk3 マグニチュードの確からしさ
 var Rk3 = map[string]string{
 	"1": "未定義",
 	"2": "防災科研システム",
@@ -131,14 +133,14 @@ var Rk3 = map[string]string{
 	"/": "不明、未設定時、キャンセル時",
 }
 
-//地震の発生場所
+// Rt1 地震の発生場所
 var Rt1 = map[string]string{
 	"0": "陸",
 	"1": "海",
 	"/": "不明",
 }
 
-//最大予測震度の変化
+// Rc1 最大予測震度の変化
 var Rc1 = map[string]string{
 	"0": "ほとんど変化なし",
 	"1": "最大予測震度が1.0 以上大きくなった。",
@@ -146,7 +148,7 @@ var Rc1 = map[string]string{
 	"/": "不明、未設定時、キャンセル時",
 }
 
-//最大予測震度の変化の理由
+// Rc2 最大予測震度の変化の理由
 var Rc2 = map[string]string{
 	"0": "変化なし",
 	"1": "主としてＭが変化したため(1.0 以上)。",
@@ -156,13 +158,13 @@ var Rc2 = map[string]string{
 	"/": "不明、未設定時、キャンセル時",
 }
 
-//到達状況
+// Ebiyy 到達状況
 var Ebiyy = map[string]string{
 	"00": "未到達",
 	"01": "既に到着と予想",
 }
 
-//タイプ
+// WarnType 電文タイプ
 var WarnType = map[string]string{
 	"NCN":  "高度利用者向け",
 	"NPN":  "一般向け",
@@ -177,7 +179,7 @@ var WarnType = map[string]string{
 	"PBI":  "強い揺れが推定される地域",
 }
 
-//発表状況
+// WarnCode 発表状況
 var WarnCode = map[string]string{
 	"0": "通常",
 	"6": "訂正",
@@ -186,7 +188,7 @@ var WarnCode = map[string]string{
 	"9": "最終",
 }
 
-//震央コード
+// ShinouCode 震央コード
 var ShinouCode = map[string]string{
 	"000": "",
 	"100": "石狩支庁北部",
@@ -521,6 +523,7 @@ var ShinouCode = map[string]string{
 	"979": "南極付近",
 }
 
+// Decoder from string to struct telegram readable
 func Decoder(str string) Telegram {
 	var to, from Telegram
 	from = Reader(str)
@@ -559,6 +562,7 @@ func Decoder(str string) Telegram {
 	return to
 }
 
+// Reader from string to struct telegram 
 func Reader(str string) Telegram {
 	var msg Telegram
 	for _, line := range strings.Split(string(str), "\n") {
