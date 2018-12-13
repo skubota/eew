@@ -31,6 +31,8 @@ type Telegram struct {
 	Rt1          string
 	Rt2          string
 	Rt3          string
+	Rc1          string
+	Rc2          string
 	Ebis         []Ebi
 }
 
@@ -529,6 +531,13 @@ func Decoder(str string) Telegram {
 	to.Warn_type = Warn_type[from.Warn_type]
 	to.Warn_code = Warn_code[from.Warn_code]
 
+	to.Rk1=Rk1[from.Rk1]
+	to.Rk2=Rk2[from.Rk2]
+	to.Rk3=Rk3[from.Rk3]
+	to.Rt1=Rk1[from.Rt1]
+	to.Rc1=Rc1[from.Rc1]
+	to.Rc2=Rc1[from.Rc2]
+
 	to.Warn_time = "20" + from.Warn_time
 	to.Command_code = from.Command_code
 	to.Eq_time = "20" + from.Eq_time
@@ -591,9 +600,11 @@ func Reader(str string) Telegram {
 			msg.Rk3 = string(vec[29:30])
 			msg.Rk4 = string(vec[30:31])
 			msg.Rk5 = string(vec[31:32])
-			msg.Rt1 = string(vec[36:37])
-			msg.Rt2 = string(vec[37:38])
-			msg.Rt3 = string(vec[38:39])
+			msg.Rt1 = string(vec[35:36])
+			msg.Rt2 = string(vec[36:37])
+			msg.Rt3 = string(vec[37:38])
+			msg.Rc1 = string(vec[44:45])
+			msg.Rc2 = string(vec[45:46])
 		} else if length == 63 {
 			// 5 : [EBI 222 S5-04 ////// 11 220 S5-04 ////// 11 211 S5-04 ////// 11](63)
 			offset = 4
