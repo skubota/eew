@@ -1,7 +1,16 @@
 eew read/decoder
 ===================
 
+=head1 DESCRIPTION
+
+Earthquake Early Warning(Japan)
+The Earthquake Early Warning (EEW) (緊急地震速報 ,Kinkyu- Jishin Sokuho-) is a warning which is issued just after an earthquake in Japan is detected.
+The warnings are issued mainly by Japan Meteorological Agency (JMA).
+JMA has two EEW schemes. One is for advanced users. The other is for the general public, which is mainly mentioned in detail in this article.
+this package support for advanced users scheme.
+
 usage
+
 	$ go get github.com/skubota/eew
 
 sample
