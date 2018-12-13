@@ -15,6 +15,7 @@ type Telegram struct {
 	Eq_time      string
 	Eq_id        string
 	Warn_type    string
+	Warn_code    string
 	Warn_num     string
 	Shinou       string
 	Shinou_lat   float64
@@ -24,6 +25,8 @@ type Telegram struct {
 	Shindo       string
 	Ebis         []Ebi
 }
+
+// EBI
 type Ebi struct {
 	Shinou  string
 	Shindo1 string
@@ -32,6 +35,7 @@ type Ebi struct {
 	Arrive  string
 }
 
+// 基本コード
 var Code_type = map[string]string{
 	"35": "最大予測震度のみ",
 	"36": "Ｍ、最大予測震度及び主要動到達予測時刻",
@@ -161,6 +165,15 @@ var Warn_type = map[string]string{
 	"PAI":  "強い揺れが推定される地方",
 	"PPI":  "強い揺れが推定される県",
 	"PBI":  "強い揺れが推定される地域",
+}
+
+//発表状況
+var Warn_code = map[string]string{
+	"0": "通常",
+	"6": "訂正",
+	"7": "訂正(キャンセル誤発表)",
+	"8": "訂正(予報)",
+	"9": "最終",
 }
 
 //震央コード
@@ -506,6 +519,7 @@ func Decoder(str string) Telegram {
 	to.Section = Section[from.Section]
 	to.Msg_type = Msg_type[from.Msg_type]
 	to.Warn_type = Warn_type[from.Warn_type]
+	to.Warn_code = Warn_code[from.Warn_code]
 
 	to.Warn_time = "20" + from.Warn_time
 	to.Command_code = from.Command_code
@@ -550,7 +564,8 @@ func Reader(str string) Telegram {
 			// 3 : [ND20110311144640 NCN009 JD////////////// JN///](46)
 			msg.Eq_id = string(vec[2:16])
 			msg.Warn_type = string(vec[17:20])
-			msg.Warn_num = string(vec[20:23])
+			msg.Warn_code = string(vec[20:21])
+			msg.Warn_num = string(vec[21:23])
 		} else if length == 48 {
 			// 4 : [288 N381 E1429 010 76 5- RK66444 RT11/// RC0////](48)
 			msg.Shinou = string(vec[0:3])
