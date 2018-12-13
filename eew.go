@@ -545,11 +545,21 @@ func Reader(str string) Telegram {
 			msg.Ebis = append(msg.Ebis, Ebi{string(vec[offset+0 : offset+3]), string(vec[offset+5 : offset+7]), string(vec[offset+7 : offset+9]), string(vec[offset+10 : offset+16]), string(vec[offset+17 : offset+19])})
 			offset = offset + 20
 			msg.Ebis = append(msg.Ebis, Ebi{string(vec[offset+0 : offset+3]), string(vec[offset+5 : offset+7]), string(vec[offset+7 : offset+9]), string(vec[offset+10 : offset+16]), string(vec[offset+17 : offset+19])})
+		} else if length == 43 {
+			// [EBI 251 S0404 ////// 01 250 S0404 ////// 01](43)
+			offset = 4
+			msg.Ebis = append(msg.Ebis, Ebi{string(vec[offset+0 : offset+3]), string(vec[offset+5 : offset+7]), string(vec[offset+7 : offset+9]), string(vec[offset+10 : offset+16]), string(vec[offset+17 : offset+19])})
+			offset = offset + 20
+			msg.Ebis = append(msg.Ebis, Ebi{string(vec[offset+0 : offset+3]), string(vec[offset+5 : offset+7]), string(vec[offset+7 : offset+9]), string(vec[offset+10 : offset+16]), string(vec[offset+17 : offset+19])})
 		} else if length == 39 {
 			//10 : [340 S0403 144739 00 331 S0403 144748 00](39)
 			offset = 0
 			msg.Ebis = append(msg.Ebis, Ebi{string(vec[offset+0 : offset+3]), string(vec[offset+5 : offset+7]), string(vec[offset+7 : offset+9]), string(vec[offset+10 : offset+16]), string(vec[offset+17 : offset+19])})
 			offset = offset + 20
+			msg.Ebis = append(msg.Ebis, Ebi{string(vec[offset+0 : offset+3]), string(vec[offset+5 : offset+7]), string(vec[offset+7 : offset+9]), string(vec[offset+10 : offset+16]), string(vec[offset+17 : offset+19])})
+		} else if length == 23 {
+			//  [EBI 341 S0403 ////// 01](23)
+			offset = 4
 			msg.Ebis = append(msg.Ebis, Ebi{string(vec[offset+0 : offset+3]), string(vec[offset+5 : offset+7]), string(vec[offset+7 : offset+9]), string(vec[offset+10 : offset+16]), string(vec[offset+17 : offset+19])})
 		} else if length == 19 {
 			//11 : [340 S0403 144739 00](19)
