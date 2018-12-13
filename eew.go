@@ -603,8 +603,8 @@ func Reader(str string) Telegram {
 			msg.Rt1 = string(vec[35:36])
 			msg.Rt2 = string(vec[36:37])
 			msg.Rt3 = string(vec[37:38])
-			msg.Rc1 = string(vec[44:45])
-			msg.Rc2 = string(vec[45:46])
+			msg.Rc1 = string(vec[43:44])
+			msg.Rc2 = string(vec[44:45])
 		} else if length == 63 {
 			// 5 : [EBI 222 S5-04 ////// 11 220 S5-04 ////// 11 211 S5-04 ////// 11](63)
 			offset = 4
