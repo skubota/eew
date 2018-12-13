@@ -3,6 +3,7 @@ package eew
 import (
 	"fmt"
 	"strings"
+	"strconv"
 )
 
 type Telegram struct {
@@ -501,8 +502,26 @@ var Shinou_code = map[string]string{
 func Decoder(str string) Telegram {
 	var to,from Telegram
 	from = Reader(str)
+
 	to.Code_type=Code_type[from.Code_type]
 	to.Section=Section[from.Section]
+	to.Msg_type=Msg_type[from.Msg_type]
+	to.Warn_type=Warn_type[from.Warn_type]
+
+	to.Warn_time=from.Warn_time
+	to.Command_code=from.Command_code
+	to.Eq_time=from.Eq_time
+	to.Eq_id=from.Eq_id
+	to.Warn_num=from.Warn_num
+	
+	to.Shinou=Shinou_code[from.Shinou]
+	to.Shindo = Shindo[from.Shindo]
+
+	to.Shinou_lat=from.Shinou_lat
+	to.Shinou_lng=from.Shinou_lng
+	to.Shinou_dpth=from.Shinou_dpth
+	to.Magnitude=from.Magnitude
+	
 	return to
 }
 
@@ -532,10 +551,13 @@ func Reader(str string) Telegram {
 		} else if length == 48 {
 			// 4 : [288 N381 E1429 010 76 5- RK66444 RT11/// RC0////](48)
 			msg.Shinou = string(vec[0:3])
-			msg.Shinou_lat = string(vec[5:8])
-			msg.Shinou_lng = string(vec[10:13])
+			lat,_ := strconv.ParseFloat(string(vec[5:8]),64)
+			msg.Shinou_lat = fmt.Sprintf("%.1f",lat)
+			lng,_ := strconv.ParseFloat(string(vec[10:13]),64)
+			msg.Shinou_lng = fmt.Sprintf("%.1f",lng)
 			msg.Shinou_dpth = string(vec[14:18])
-			msg.Magnitude = string(vec[19:21])
+			mag,_ := strconv.ParseFloat(string(vec[19:21]),64)
+			msg.Magnitude = fmt.Sprintf("%.1f",mag)
 			msg.Shindo = string(vec[22:24])
 		} else if length == 63 {
 			// 5 : [EBI 222 S5-04 ////// 11 220 S5-04 ////// 11 211 S5-04 ////// 11](63)
