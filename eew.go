@@ -498,8 +498,9 @@ var Shinou_code = map[string]string{
 	"979": "南極付近",
 }
 
-func Decoder(from Telegram) Telegram {
-	var to Telegram
+func Decoder(str string) Telegram {
+	var to,from Telegram
+	from = Reader(str)
 	to.Code_type=Code_type[from.Code_type]
 	to.Section=Section[from.Section]
 	return to
