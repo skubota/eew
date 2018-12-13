@@ -15,7 +15,6 @@ type Telegram struct {
 	Eq_time      string
 	Eq_id        string
 	Warn_type    string
-	Warn_code    string
 	Warn_num     string
 	Shinou       string
 	Shinou_lat   float64
