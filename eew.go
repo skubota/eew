@@ -510,10 +510,10 @@ func Decoder(str string) Telegram {
 	to.Warn_type=Warn_type[from.Warn_type]
 
 	wt,_ := strconv.ParseInt(from.Warn_time,10,32)
-	to.Warn_time=fmt.Sprintln(time.Unix(wt, 0).Format("2006-01-02 15:04:05"))
+	to.Warn_time=fmt.Sprintf(time.Unix(wt, 0).Format("2006-01-02 15:04:05"))
 	to.Command_code=from.Command_code
 	et,_ := strconv.ParseInt(from.Eq_time,10,32)
-	to.Eq_time=fmt.Sprintln(time.Unix(et, 0).Format("2006-01-02 15:04:05"))
+	to.Eq_time=fmt.Sprintf(time.Unix(et, 0).Format("2006-01-02 15:04:05"))
 	to.Eq_id=from.Eq_id
 	to.Warn_num=from.Warn_num
 	
