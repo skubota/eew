@@ -13,6 +13,10 @@ usage
 
 	$ go get github.com/skubota/eew
 
+godoc
+
+	https://godoc.org/github.com/skubota/eew
+
 sample
 
 ```go
