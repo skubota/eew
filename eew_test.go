@@ -3,7 +3,6 @@ package eew
 import (
 	"fmt"
 	"testing"
-	"github.com/skubota/eew"
 )
 
 func TestReader(t *testing.T) {
@@ -22,7 +21,7 @@ EBI 222 S5-04 ////// 11 220 S5-04 ////// 11 211 S5-04 ////// 11
 340 S0403 144739 00 331 S0403 144748 00
 9999=
 `
-	r:=eew.Reader(data)
+	r:=Reader(data)
 	fmt.Printf("Reader:[%#v]\n",r)
 	if r.EqID != "20110311144640" {
 		t.Errorf("EqID is not correct :%s", r.EqID)
@@ -45,7 +44,7 @@ EBI 222 S5-04 ////// 11 220 S5-04 ////// 11 211 S5-04 ////// 11
 340 S0403 144739 00 331 S0403 144748 00
 9999=
 `
-        r:=eew.Decoder(data)
+        r:=Decoder(data)
 	fmt.Printf("Decoder:[%#v]\n",r)
         if r.EqID != "20110311144640" {
                 t.Errorf("EqID is not correct :%s", r.EqID)
