@@ -19,6 +19,8 @@ godoc
 
 sample
 
+<https://play.golang.org/p/C1ObdxVBC54>
+
 ```go
 package main
 
