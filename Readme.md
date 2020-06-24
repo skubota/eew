@@ -13,13 +13,13 @@ usage
 
 	$ go get github.com/skubota/eew
 
-godoc
+package eew 
 
-<https://godoc.org/github.com/skubota/eew>
+<https://pkg.go.dev/github.com/skubota/eew>
 
 sample
 
-<https://play.golang.org/p/C1ObdxVBC54>
+<https://play.golang.org/p/twDmdbRdCHV>
 
 ```go
 package main
