@@ -1,6 +1,10 @@
 Package eew is EEW reader/decoder
 ===================
-https://pkg.go.dev/badge/github.com/skubota/eew
+[![GoDev][godev-image]][godev-url]
+
+[godev-image]: https://pkg.go.dev/badge/github.com/skubota/eew
+[godev-url]: https://pkg.go.dev/github.com/skubota/eew
+
 
 DESCRIPTION
 
