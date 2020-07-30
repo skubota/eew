@@ -40,10 +40,11 @@ type Telegram struct {
 
 // Ebi in Telegram 予想震度と到達時
 type Ebi struct {
-	Shinou  string
+	Chiiki  string
 	Shindo1 string
 	Shindo2 string
 	Time    string
+	Type    string
 	Arrive  string
 }
 
@@ -170,16 +171,6 @@ var Rc2 = map[string]string{
 	"4": "震源の深さが変化したため(上記のいずれにもあてはまらず、30km 以上の変化)。",
 	"9": "PLUM 法による予測により変化したため。",
 	"/": "不明、未設定時、キャンセル時",
-}
-
-// Ebiyy 到達状況
-var Ebiyy = map[string]string{
-	"00": "予報/未到達",
-	"01": "予報/既に到着と予想",
-	"09": "予報/主要動到達時刻の予測なし（PLUM 法による予測）",
-	"10": "警報/未到達",
-	"11": "警報/既に到着と予想",
-	"19": "警報/主要動到達時刻の予測なし（PLUM 法による予測）",
 }
 
 // Ebiy1 各地域の警報の識別符
@@ -794,7 +785,7 @@ func Decoder(str string) Telegram {
 	to.Magnitude = from.Magnitude
 
 	for e := range from.Ebis {
-		to.Ebis = append(to.Ebis, Ebi{ChiikiCode[from.Ebis[e].Shinou], Shindo[from.Ebis[e].Shindo1], Shindo[from.Ebis[e].Shindo2], from.Ebis[e].Time, Ebiyy[from.Ebis[e].Arrive]})
+		to.Ebis = append(to.Ebis, Ebi{ChiikiCode[from.Ebis[e].Chiiki], Shindo[from.Ebis[e].Shindo1], Shindo[from.Ebis[e].Shindo2], from.Ebis[e].Time, Ebiy1[from.Ebis[e].Type], Ebiy2[from.Ebis[e].Arrive]})
 	}
 
 	return to
@@ -850,39 +841,39 @@ func Reader(str string) Telegram {
 		} else if length == 63 {
 			// 5 : [EBI 222 S5-04 ////// 11 220 S5-04 ////// 11 211 S5-04 ////// 11](63)
 			offset = 4
-			msg.Ebis = append(msg.Ebis, Ebi{string(vec[offset+0 : offset+3]), string(vec[offset+5 : offset+7]), string(vec[offset+7 : offset+9]), string(vec[offset+10 : offset+16]), string(vec[offset+17 : offset+19])})
+			msg.Ebis = append(msg.Ebis, Ebi{string(vec[offset+0 : offset+3]), string(vec[offset+5 : offset+7]), string(vec[offset+7 : offset+9]), string(vec[offset+10 : offset+16]), string(vec[offset+17 : offset+18]), string(vec[offset+18 : offset+19])})
 			offset = offset + 20
-			msg.Ebis = append(msg.Ebis, Ebi{string(vec[offset+0 : offset+3]), string(vec[offset+5 : offset+7]), string(vec[offset+7 : offset+9]), string(vec[offset+10 : offset+16]), string(vec[offset+17 : offset+19])})
+			msg.Ebis = append(msg.Ebis, Ebi{string(vec[offset+0 : offset+3]), string(vec[offset+5 : offset+7]), string(vec[offset+7 : offset+9]), string(vec[offset+10 : offset+16]), string(vec[offset+17 : offset+18]), string(vec[offset+18 : offset+19])})
 			offset = offset + 20
-			msg.Ebis = append(msg.Ebis, Ebi{string(vec[offset+0 : offset+3]), string(vec[offset+5 : offset+7]), string(vec[offset+7 : offset+9]), string(vec[offset+10 : offset+16]), string(vec[offset+17 : offset+19])})
+			msg.Ebis = append(msg.Ebis, Ebi{string(vec[offset+0 : offset+3]), string(vec[offset+5 : offset+7]), string(vec[offset+7 : offset+9]), string(vec[offset+10 : offset+16]), string(vec[offset+17 : offset+18]), string(vec[offset+18 : offset+19])})
 		} else if length == 59 {
 			// 6 : [210 S5-04 144703 10 221 S5-04 144703 10 213 S0404 ////// 11](59)
 			offset = 0
-			msg.Ebis = append(msg.Ebis, Ebi{string(vec[offset+0 : offset+3]), string(vec[offset+5 : offset+7]), string(vec[offset+7 : offset+9]), string(vec[offset+10 : offset+16]), string(vec[offset+17 : offset+19])})
+			msg.Ebis = append(msg.Ebis, Ebi{string(vec[offset+0 : offset+3]), string(vec[offset+5 : offset+7]), string(vec[offset+7 : offset+9]), string(vec[offset+10 : offset+16]), string(vec[offset+17 : offset+18]), string(vec[offset+18 : offset+19])})
 			offset = offset + 20
-			msg.Ebis = append(msg.Ebis, Ebi{string(vec[offset+0 : offset+3]), string(vec[offset+5 : offset+7]), string(vec[offset+7 : offset+9]), string(vec[offset+10 : offset+16]), string(vec[offset+17 : offset+19])})
+			msg.Ebis = append(msg.Ebis, Ebi{string(vec[offset+0 : offset+3]), string(vec[offset+5 : offset+7]), string(vec[offset+7 : offset+9]), string(vec[offset+10 : offset+16]), string(vec[offset+17 : offset+18]), string(vec[offset+18 : offset+19])})
 			offset = offset + 20
-			msg.Ebis = append(msg.Ebis, Ebi{string(vec[offset+0 : offset+3]), string(vec[offset+5 : offset+7]), string(vec[offset+7 : offset+9]), string(vec[offset+10 : offset+16]), string(vec[offset+17 : offset+19])})
+			msg.Ebis = append(msg.Ebis, Ebi{string(vec[offset+0 : offset+3]), string(vec[offset+5 : offset+7]), string(vec[offset+7 : offset+9]), string(vec[offset+10 : offset+16]), string(vec[offset+17 : offset+18]), string(vec[offset+18 : offset+19])})
 		} else if length == 43 {
 			// [EBI 251 S0404 ////// 01 250 S0404 ////// 01](43)
 			offset = 4
-			msg.Ebis = append(msg.Ebis, Ebi{string(vec[offset+0 : offset+3]), string(vec[offset+5 : offset+7]), string(vec[offset+7 : offset+9]), string(vec[offset+10 : offset+16]), string(vec[offset+17 : offset+19])})
+			msg.Ebis = append(msg.Ebis, Ebi{string(vec[offset+0 : offset+3]), string(vec[offset+5 : offset+7]), string(vec[offset+7 : offset+9]), string(vec[offset+10 : offset+16]), string(vec[offset+17 : offset+18]), string(vec[offset+18 : offset+19])})
 			offset = offset + 20
-			msg.Ebis = append(msg.Ebis, Ebi{string(vec[offset+0 : offset+3]), string(vec[offset+5 : offset+7]), string(vec[offset+7 : offset+9]), string(vec[offset+10 : offset+16]), string(vec[offset+17 : offset+19])})
+			msg.Ebis = append(msg.Ebis, Ebi{string(vec[offset+0 : offset+3]), string(vec[offset+5 : offset+7]), string(vec[offset+7 : offset+9]), string(vec[offset+10 : offset+16]), string(vec[offset+17 : offset+18]), string(vec[offset+18 : offset+19])})
 		} else if length == 39 {
 			//10 : [340 S0403 144739 00 331 S0403 144748 00](39)
 			offset = 0
-			msg.Ebis = append(msg.Ebis, Ebi{string(vec[offset+0 : offset+3]), string(vec[offset+5 : offset+7]), string(vec[offset+7 : offset+9]), string(vec[offset+10 : offset+16]), string(vec[offset+17 : offset+19])})
+			msg.Ebis = append(msg.Ebis, Ebi{string(vec[offset+0 : offset+3]), string(vec[offset+5 : offset+7]), string(vec[offset+7 : offset+9]), string(vec[offset+10 : offset+16]), string(vec[offset+17 : offset+18]), string(vec[offset+18 : offset+19])})
 			offset = offset + 20
-			msg.Ebis = append(msg.Ebis, Ebi{string(vec[offset+0 : offset+3]), string(vec[offset+5 : offset+7]), string(vec[offset+7 : offset+9]), string(vec[offset+10 : offset+16]), string(vec[offset+17 : offset+19])})
+			msg.Ebis = append(msg.Ebis, Ebi{string(vec[offset+0 : offset+3]), string(vec[offset+5 : offset+7]), string(vec[offset+7 : offset+9]), string(vec[offset+10 : offset+16]), string(vec[offset+17 : offset+18]), string(vec[offset+18 : offset+19])})
 		} else if length == 23 {
 			//  [EBI 341 S0403 ////// 01](23)
 			offset = 4
-			msg.Ebis = append(msg.Ebis, Ebi{string(vec[offset+0 : offset+3]), string(vec[offset+5 : offset+7]), string(vec[offset+7 : offset+9]), string(vec[offset+10 : offset+16]), string(vec[offset+17 : offset+19])})
+			msg.Ebis = append(msg.Ebis, Ebi{string(vec[offset+0 : offset+3]), string(vec[offset+5 : offset+7]), string(vec[offset+7 : offset+9]), string(vec[offset+10 : offset+16]), string(vec[offset+17 : offset+18]), string(vec[offset+18 : offset+19])})
 		} else if length == 19 {
 			//11 : [340 S0403 144739 00](19)
 			offset = 0
-			msg.Ebis = append(msg.Ebis, Ebi{string(vec[offset+0 : offset+3]), string(vec[offset+5 : offset+7]), string(vec[offset+7 : offset+9]), string(vec[offset+10 : offset+16]), string(vec[offset+17 : offset+19])})
+			msg.Ebis = append(msg.Ebis, Ebi{string(vec[offset+0 : offset+3]), string(vec[offset+5 : offset+7]), string(vec[offset+7 : offset+9]), string(vec[offset+10 : offset+16]), string(vec[offset+17 : offset+18]), string(vec[offset+18 : offset+19])})
 		} else if length == 5 {
 			//13 : [9999=](5)
 			return msg
