@@ -766,7 +766,11 @@ func Decoder(str string) Telegram {
 	to.Rk1 = Rk1[from.Rk1]
 	to.Rk2 = Rk2[from.Rk2]
 	to.Rk3 = Rk3[from.Rk3]
-	to.Rt1 = Rk1[from.Rt1]
+
+	to.Rt1 = Rt1[from.Rt1]
+	to.Rt2 = Rt2[from.Rt2]
+	to.Rt3 = Rt3[from.Rt3]
+
 	to.Rc1 = Rc1[from.Rc1]
 	to.Rc2 = Rc1[from.Rc2]
 
@@ -785,7 +789,16 @@ func Decoder(str string) Telegram {
 	to.Magnitude = from.Magnitude
 
 	for e := range from.Ebis {
-		to.Ebis = append(to.Ebis, Ebi{ChiikiCode[from.Ebis[e].Chiiki], Shindo[from.Ebis[e].Shindo1], Shindo[from.Ebis[e].Shindo2], from.Ebis[e].Time, Ebiy1[from.Ebis[e].Type], Ebiy2[from.Ebis[e].Arrive]})
+		to.Ebis = append(
+			to.Ebis, Ebi{
+				ChiikiCode[from.Ebis[e].Chiiki],
+				Shindo[from.Ebis[e].Shindo1],
+				Shindo[from.Ebis[e].Shindo2],
+				from.Ebis[e].Time,
+				Ebiy1[from.Ebis[e].Type],
+				Ebiy2[from.Ebis[e].Arrive],
+			},
+		)
 	}
 
 	return to
